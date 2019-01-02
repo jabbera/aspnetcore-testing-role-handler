@@ -1,0 +1,1 @@
+# aspnetcore-testing-role-handler
