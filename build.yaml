@@ -8,6 +8,9 @@ variables:
 trigger:
 - master
 
+pr:
+- master
+
 pool:
   name: "Hosted VS2017"
 
@@ -55,3 +58,4 @@ steps:
   inputs:
     artifactName: 'nuget' 
     targetPath: $(Build.ArtifactStagingDirectory)
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
