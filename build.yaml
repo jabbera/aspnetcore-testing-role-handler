@@ -1,0 +1,57 @@
+name: $(version).$(Date:yyyyMMdd)$(Rev:.r)
+variables:
+  version: 0.0.1
+  nugetVersion: 4.9.2
+  dotNetSdkVersion: 2.2.101
+  buildConfiguration: "Release"
+
+trigger:
+- master
+
+pool:
+  name: "Hosted VS2017"
+
+steps:
+- task: NuGetToolInstaller@0
+  displayName: "Install NuGet Client"
+  inputs:
+    versionSpec: $(nugetVersion)
+
+- task: DotNetCoreInstaller@0
+  displayName: "Install .NET Core SDK"
+  inputs:
+    packageType: 'sdk'
+    version: $(dotNetSdkVersion)
+
+- task: DotNetCoreCLI@2
+  displayName: "Restore"
+  inputs:
+    command: 'restore'
+    projects: '**/*.sln'
+
+- task: DotNetCoreCLI@2
+  displayName: "Build"
+  inputs:
+    command: 'build'
+    projects: '**/*.sln'
+    arguments: --configuration $(buildConfiguration) --no-restore
+
+- task: DotNetCoreCLI@2
+  displayName: "Test"
+  inputs:
+    command: 'test'
+    projects: '**/*.sln'
+    arguments: --configuration $(buildConfiguration) --no-restore
+
+- task: DotNetCoreCLI@2
+  displayName: "Pack"
+  inputs:
+    command: 'pack'
+    configuration: 'release'
+    projects: '**/AspNetCore.Testing.RoleHandler.csproj'
+    arguments: --configuration $(buildConfiguration) --no-restore
+
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'nuget' 
+    targetPath: $(Build.ArtifactStagingDirectory)
