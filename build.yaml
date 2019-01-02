@@ -3,7 +3,9 @@ variables:
   version: 0.0.1
   nugetVersion: 4.9.2
   dotNetSdkVersion: 2.2.101
+  reportGenerator_Version: 4.0.4
   buildConfiguration: "Release"
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
 
 trigger:
 - master
@@ -44,7 +46,20 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*.sln'
-    arguments: --configuration $(buildConfiguration) --no-restore
+    arguments: --configuration $(buildConfiguration) --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\Coverage\ /p:Exclude="[AspNetCore.Testing.Site]*"
+
+- script: >-
+    dotnet tool install dotnet-reportgenerator-globaltool 
+    --global 
+    --version $(reportGenerator_Version)
+  displayName: "Install code coverage report generator tool"
+
+- script: >-
+    reportgenerator 
+    "-reports:$(Build.SourcesDirectory)\Coverage\*.xml" 
+    "-targetdir:$(Build.SourcesDirectory)\Coverage\Html" 
+    "-reporttypes:Cobertura;HtmlInline_AzurePipelines;Badges"
+  displayName: Generate code coverage report
 
 - task: DotNetCoreCLI@2
   displayName: "Pack"
@@ -53,6 +68,12 @@ steps:
     configuration: 'release'
     projects: '**/AspNetCore.Testing.RoleHandler.csproj'
     arguments: --configuration $(buildConfiguration) --no-restore
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: $(Build.SourcesDirectory)\coverage\.cobertura.xml
+    reportDirectory: $(Build.SourcesDirectory)\coverage\html
 
 - task: PublishPipelineArtifact@0
   inputs:
