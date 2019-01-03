@@ -20,6 +20,10 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector.Test
             this._factory.RoleConfig.Reset();
         }
 
+        /// <summary>
+        /// Make an authenticated call to an authenticated endpoint. <see cref="Site.Controllers.ValuesController.AllowAuthorized"/>
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task DefaultConfigIsAuthorizedTest()
         {
@@ -30,6 +34,10 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector.Test
             response.EnsureSuccessStatusCode();
         }
 
+        /// <summary>
+        /// Make an unauthenticated call to and authenticated endpoint. <see cref="Site.Controllers.ValuesController.AllowAuthorized"/>
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task NoAuthorizationHeaderReturnsUnauthorizedTest()
         {
@@ -42,6 +50,10 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector.Test
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
+        /// <summary>
+        /// Make an unauthenticated call to an unauthenticated endpoint. <see cref="Site.Controllers.ValuesController.AllowAnonymous"/>
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task CreationOfAnonymousClientsWorksTest()
         {
@@ -54,6 +66,10 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector.Test
             response.EnsureSuccessStatusCode();
         }
 
+        /// <summary>
+        /// Make an authenticated call with a role to an authenticated endpoint requiring the role. <see cref="Site.Controllers.ValuesController.RequireRoleReader"/>
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task RoleCustomizationWorksTest()
         {
@@ -66,6 +82,28 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector.Test
             response.EnsureSuccessStatusCode();
         }
 
+        /// <summary>
+        /// Make an authenticated call without required role to an authenticated endpoint
+        /// requiring the role. <see cref="Site.Controllers.ValuesController.RequireRoleReader"/>
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task RoleCustomizationWorkDeniedTest()
+        {
+            this._factory.RoleConfig.Roles = new[] { "Writer" };
+
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync("api/Values/RequireRoleReader");
+
+            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        }
+
+
+        /// <summary>
+        /// Make an authenticated call with a custom name and ensure that name is accessible. 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task NameIsInHttpContextTest()
         {
@@ -84,6 +122,10 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector.Test
             Assert.Equal(expectedName, actual);
         }
 
+        /// <summary>
+        /// Make an authenticated call with a custom claim and ensure it's accessible.
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task CustomClaimsWorkTest()
         {

@@ -11,8 +11,18 @@ using Newtonsoft.Json;
 
 namespace AspNetCore.Testing.Authentication.ClaimInjector
 {
+    /// <summary>
+    /// A derived class that instruments the WebHost with the claim injector and the client
+    /// with the appropriate Authorization header per the configured: <see cref="ClaimInjectorHandlerHeaderConfig"/>
+    /// via: <see cref="RoleConfig"/>. If you derived off this class to further customized testing
+    /// please be sure to call <c>base.<see cref="ConfigureClient"/></c> and <c>base.<see cref="ConfigureWebHost"/></c>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ClaimInjectorWebApplicationFactory<T> : WebApplicationFactory<T> where T : class
     {
+        /// <summary>
+        /// The main customization point of the claims.
+        /// </summary>
         public ClaimInjectorHandlerHeaderConfig RoleConfig { get; } = new ClaimInjectorHandlerHeaderConfig();
 
         protected override void ConfigureClient(HttpClient client)

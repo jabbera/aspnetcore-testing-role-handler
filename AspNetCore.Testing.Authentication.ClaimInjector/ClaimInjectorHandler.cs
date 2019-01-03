@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -12,10 +10,17 @@ using Newtonsoft.Json;
 
 namespace AspNetCore.Testing.Authentication.ClaimInjector
 {
-    public class ClaimInjectorHandler : AuthenticationHandler<ClaimInjectorHandlerOptions>
+    internal class ClaimInjectorHandler : AuthenticationHandler<ClaimInjectorHandlerOptions>
     {
-        public const string AuthenticationScheme = "Bypass";
+        internal const string AuthenticationScheme = "Bypass";
 
+        /// <summary>
+        /// This must be public for the middleware to be creatable by asp.net core
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="logger"></param>
+        /// <param name="encoder"></param>
+        /// <param name="clock"></param>
         public ClaimInjectorHandler(IOptionsMonitor<ClaimInjectorHandlerOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) 
             : base(options, logger, encoder, clock)
         {

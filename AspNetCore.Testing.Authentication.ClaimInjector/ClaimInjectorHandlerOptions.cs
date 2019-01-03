@@ -2,7 +2,7 @@
 
 namespace AspNetCore.Testing.Authentication.ClaimInjector
 {
-    public class ClaimInjectorHandlerOptions : AuthenticationSchemeOptions
+    internal class ClaimInjectorHandlerOptions : AuthenticationSchemeOptions
     {
 
     }
