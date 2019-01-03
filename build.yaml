@@ -75,8 +75,8 @@ steps:
     summaryFileLocation: $(Build.SourcesDirectory)\coverage\.cobertura.xml
     reportDirectory: $(Build.SourcesDirectory)\coverage\html
 
-- task: PublishPipelineArtifact@0
+- task: PublishBuildArtifacts@1
   inputs:
     artifactName: 'packages' 
-    targetPath: $(Build.ArtifactStagingDirectory)
+    pathtoPublish: $(Build.ArtifactStagingDirectory)
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
