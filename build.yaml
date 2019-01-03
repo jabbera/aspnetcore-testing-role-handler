@@ -39,7 +39,7 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.sln'
-    arguments: --configuration $(buildConfiguration) --no-restore
+    arguments: --configuration $(buildConfiguration) --no-restore -p:Version=$(Build.BuildNumber)
 
 - task: DotNetCoreCLI@2
   displayName: "Test"
