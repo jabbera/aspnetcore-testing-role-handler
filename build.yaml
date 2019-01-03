@@ -26,6 +26,8 @@ steps:
     projectKey: 'jabbera_aspnetcore-testing-role-handler'
     projectName: AspNetCore.Testing.Authentication.ClaimInjector
     projectVersion: '$(ver)'
+    extraProperties: |
+     sonar.cs.opencover.reportsPaths="$(Build.SourcesDirectory)\coverage\.opencover.xml"
 
 - task: NuGetToolInstaller@0
   displayName: "Install NuGet Client"
@@ -56,13 +58,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*.sln'
-    arguments: --configuration $(buildConfiguration) --no-build --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\Coverage\ /p:Exclude="[AspNetCore.Testing.Authentication.ClaimInjector.Site]*"
-
-- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
-  displayName: 'Run Code Analysis'
-
-- task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
-  displayName: 'Publish Quality Gate Result'
+    arguments: --configuration $(buildConfiguration) --no-build --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$(Build.SourcesDirectory)\Coverage\ /p:Exclude="[AspNetCore.Testing.Authentication.ClaimInjector.Site]*"
 
 - script: >-
     dotnet tool install dotnet-reportgenerator-globaltool 
@@ -88,8 +84,14 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'cobertura'
-    summaryFileLocation: $(Build.SourcesDirectory)\coverage\.cobertura.xml
+    summaryFileLocation: $(Build.SourcesDirectory)\coverage\html\Cobertura.xml
     reportDirectory: $(Build.SourcesDirectory)\coverage\html
+
+- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+  displayName: 'Run Code Analysis'
+
+- task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
+  displayName: 'Publish Quality Gate Result'
 
 - task: PublishBuildArtifacts@1
   inputs:
