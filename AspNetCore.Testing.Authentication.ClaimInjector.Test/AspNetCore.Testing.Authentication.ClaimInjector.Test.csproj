@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <RootNamespace>AspNetCore.Testing.RoleHandler.Test</RootNamespace>
+    <RootNamespace>AspNetCore.Testing.Authentication.ClaimInjector.Test</RootNamespace>
 
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <IsPackable>false</IsPackable>
@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspNetCore.Testing.Site\AspNetCore.Testing.Site.csproj" />
-    <ProjectReference Include="..\AspNetCore.Testing.RoleHandler\AspNetCore.Testing.RoleHandler.csproj" />
+    <ProjectReference Include="..\AspNetCore.Testing.Authentication.ClaimInjector.Site\AspNetCore.Testing.Authentication.ClaimInjector.Site.csproj" />
+    <ProjectReference Include="..\AspNetCore.Testing.Authentication.ClaimInjector\AspNetCore.Testing.Authentication.ClaimInjector.csproj" />
   </ItemGroup>
 
   <Target Name="CopyAditionalFiles" AfterTargets="Build">

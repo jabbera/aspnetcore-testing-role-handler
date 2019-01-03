@@ -67,7 +67,7 @@ steps:
   inputs:
     command: 'pack'
     configuration: 'release'
-    packagesToPack: '**/AspNetCore.Testing.RoleHandler.csproj'
+    packagesToPack: '**/AspNetCore.Testing.Authentication.ClaimInjector.csproj'
     nobuild: true
 
 - task: PublishCodeCoverageResults@1

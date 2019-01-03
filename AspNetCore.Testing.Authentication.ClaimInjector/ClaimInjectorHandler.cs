@@ -10,13 +10,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace AspNetCore.Testing.RoleHandler
+namespace AspNetCore.Testing.Authentication.ClaimInjector
 {
-    public class CustomRoleHandler : AuthenticationHandler<CustomRoleHandlerOptions>
+    public class ClaimInjectorHandler : AuthenticationHandler<ClaimInjectorHandlerOptions>
     {
         public const string AuthenticationScheme = "Bypass";
 
-        public CustomRoleHandler(IOptionsMonitor<CustomRoleHandlerOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) 
+        public ClaimInjectorHandler(IOptionsMonitor<ClaimInjectorHandlerOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) 
             : base(options, logger, encoder, clock)
         {
         }
@@ -31,11 +31,9 @@ namespace AspNetCore.Testing.RoleHandler
             string base64Json = this.Request.Headers["Authorization"].ToString().Replace(AuthenticationScheme, "").Trim();
             string json = Encoding.UTF8.GetString(Convert.FromBase64String(base64Json));
 
-            var customRoleHandlerHeaderConfig = JsonConvert.DeserializeObject<CustomRoleHandlerHeaderConfig>(json);
-            Claim name = new Claim(ClaimTypes.Name, customRoleHandlerHeaderConfig.Name);
-            IEnumerable<Claim> roles = customRoleHandlerHeaderConfig.Roles.Select(x => new Claim(ClaimTypes.Role, x));
+            var claimInjectorHandlerHeaderConfig = JsonConvert.DeserializeObject<ClaimInjectorHandlerHeaderConfig>(json);
 
-            ClaimsIdentity identity = new ClaimsIdentity(roles.Append(name), AuthenticationScheme);
+            ClaimsIdentity identity = new ClaimsIdentity(claimInjectorHandlerHeaderConfig.Claims, AuthenticationScheme);
             return Task.FromResult(
                 AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(identity), AuthenticationScheme)));
         }

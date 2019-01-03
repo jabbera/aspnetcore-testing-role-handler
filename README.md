@@ -1,4 +1,4 @@
-# AspNetCore.Testing.RoleHandler
+# AspNetCore.Testing.Authentication.ClaimInjector
 
 Excercising claim based logic using Microsoft.AspNetCore.Mvc.Testing is now as simple as:
 

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Testing.RoleHandler", "AspNetCore.Testing.RoleHandler\AspNetCore.Testing.RoleHandler.csproj", "{D6034548-71E2-42D4-9907-229DBF026B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Testing.Authentication.ClaimInjector", "AspNetCore.Testing.Authentication.ClaimInjector\AspNetCore.Testing.Authentication.ClaimInjector.csproj", "{D6034548-71E2-42D4-9907-229DBF026B2A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Testing.RoleHandler.Test", "AspNetCore.Testing.RoleHandler.Test\AspNetCore.Testing.RoleHandler.Test.csproj", "{A12FD240-CF0C-4784-ADB9-60E7E5FCBCBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Testing.Authentication.ClaimInjector.Test", "AspNetCore.Testing.Authentication.ClaimInjector.Test\AspNetCore.Testing.Authentication.ClaimInjector.Test.csproj", "{A12FD240-CF0C-4784-ADB9-60E7E5FCBCBA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Testing.Site", "AspNetCore.Testing.Site\AspNetCore.Testing.Site.csproj", "{99D27BB3-ED44-4779-AE5F-FAC0830E9519}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Testing.Authentication.ClaimInjector.Site", "AspNetCore.Testing.Authentication.ClaimInjector.Site\AspNetCore.Testing.Authentication.ClaimInjector.Site.csproj", "{99D27BB3-ED44-4779-AE5F-FAC0830E9519}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
