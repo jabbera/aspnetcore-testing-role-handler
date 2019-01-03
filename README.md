@@ -15,14 +15,29 @@ Excercising claim based logic using Microsoft.AspNetCore.Mvc.Testing is now as s
         response.EnsureSuccessStatusCode();
     }
 
+    [Fact]
+    public async Task NoAuthorizationHeaderReturnsUnauthorizedTest()
+    {
+        this._factory.RoleConfig.AnonymousRequest = true;
+
+        var client = _factory.CreateClient();
+
+        var response = await client.GetAsync("api/Values/AllowAuthorized");
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+
     private readonly CustomRoleWebApplicationFactory<Startup> _factory;
 
     public UnitTests(CustomRoleWebApplicationFactory<Startup> factory)
     {
         this._factory = factory;
         this._factory.RoleConfig.Reset();
-    }    
+    }
 ```
+
+For more examples see the unit tests [here](https://github.com/jabbera/aspnetcore-testing-role-handler/blob/master/AspNetCore.Testing.Authentication.ClaimInjector.Test/UnitTests.cs).
 
 After learning about this great new library [Microsoft.AspNetCore.Mvc.Testing](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-2.2) I was excited to try it. Then I found out it has little to little to no built in support for testing controllers with Role based Authorization. 
 
