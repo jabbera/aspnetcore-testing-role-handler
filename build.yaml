@@ -1,6 +1,7 @@
-name: $(version)$(Rev:.r)
+name: $(ver)$(Rev:.r)
 variables:
-  version: 0.1
+  ver: 0.2
+  version: $(Build.BuildNumber) # Nuget package version
   nugetVersion: 4.9.2
   dotNetSdkVersion: 2.2.101
   reportGenerator_Version: 4.0.4
@@ -46,7 +47,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*.sln'
-    arguments: --configuration $(buildConfiguration) --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\Coverage\ /p:Exclude="[AspNetCore.Testing.Site]*"
+    arguments: --configuration $(buildConfiguration) --no-build --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\Coverage\ /p:Exclude="[AspNetCore.Testing.Site]*"
 
 - script: >-
     dotnet tool install dotnet-reportgenerator-globaltool 
@@ -66,8 +67,8 @@ steps:
   inputs:
     command: 'pack'
     configuration: 'release'
-    projects: '**/AspNetCore.Testing.RoleHandler.csproj'
-    arguments: --configuration $(buildConfiguration) --no-restore
+    packagesToPack: '**/AspNetCore.Testing.RoleHandler.csproj'
+    nobuild: true
 
 - task: PublishCodeCoverageResults@1
   inputs:
