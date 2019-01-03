@@ -33,7 +33,7 @@ namespace AspNetCore.Testing.RoleHandler
 
             var customRoleHandlerHeaderConfig = JsonConvert.DeserializeObject<CustomRoleHandlerHeaderConfig>(json);
             Claim name = new Claim(ClaimTypes.Name, customRoleHandlerHeaderConfig.Name);
-            IEnumerable<Claim> roles = customRoleHandlerHeaderConfig.Roles?.Select(x => new Claim(ClaimTypes.Role, x));
+            IEnumerable<Claim> roles = customRoleHandlerHeaderConfig.Roles.Select(x => new Claim(ClaimTypes.Role, x));
 
             ClaimsIdentity identity = new ClaimsIdentity(roles.Append(name), AuthenticationScheme);
             return Task.FromResult(

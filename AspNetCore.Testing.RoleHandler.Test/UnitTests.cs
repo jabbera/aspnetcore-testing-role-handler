@@ -41,7 +41,6 @@ namespace role_handler_test
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
-
         [Fact]
         public async Task CreationOfAnonymousClientsWorksTest()
         {
@@ -83,5 +82,14 @@ namespace role_handler_test
 
             Assert.Equal(expectedName, actual);
         }
+
+        [Fact]
+        public void NullNameThrowsTest() => Assert.Throws<ArgumentNullException>(() => _factory.RoleConfig.Name = null);
+        
+        [Fact]
+        public void NullRolesThrowsTest() => Assert.Throws<ArgumentNullException>(() => _factory.RoleConfig.Roles = null);
+
+        [Fact]
+        public void NullRoleInCollectionThrowsTest() => Assert.Throws<ArgumentNullException>(() => _factory.RoleConfig.Roles = new string[] { null });
     }
 }
