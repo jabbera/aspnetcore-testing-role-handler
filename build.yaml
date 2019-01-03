@@ -47,7 +47,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*.sln'
-    arguments: --configuration $(buildConfiguration) --no-build --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\Coverage\ /p:Exclude="[AspNetCore.Testing.Site]*"
+    arguments: --configuration $(buildConfiguration) --no-build --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\Coverage\ /p:Exclude="[AspNetCore.Testing.Authentication.ClaimInjector.Site]*"
 
 - script: >-
     dotnet tool install dotnet-reportgenerator-globaltool 

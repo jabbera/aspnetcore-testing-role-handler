@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AspNetCore.Testing.Authentication.ClaimInjector;
 using AspNetCore.Testing.Authentication.ClaimInjector.Site;
@@ -89,7 +90,7 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector.Test
             string expectedValue = "Hello World";
             string expectedClaimType = "CustomClaimType";
 
-            this._factory.RoleConfig.AddClaim(expectedClaimType, expectedValue);
+            this._factory.RoleConfig.AddClaim(new Claim(expectedClaimType, expectedValue));
 
             var client = _factory.CreateClient();
 
