@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace AspNetCore.Testing.RoleHandler
+namespace AspNetCore.Testing.Authentication.ClaimInjector
 {
-    public class CustomRoleWebApplicationFactory<T> : WebApplicationFactory<T> where T : class
+    public class ClaimInjectorWebApplicationFactory<T> : WebApplicationFactory<T> where T : class
     {
-        public CustomRoleHandlerHeaderConfig RoleConfig { get; } = new CustomRoleHandlerHeaderConfig();
+        public ClaimInjectorHandlerHeaderConfig RoleConfig { get; } = new ClaimInjectorHandlerHeaderConfig();
 
         protected override void ConfigureClient(HttpClient client)
         {
@@ -37,8 +37,8 @@ namespace AspNetCore.Testing.RoleHandler
 
             builder.ConfigureTestServices(services =>
             {
-                services.AddAuthentication(x => x.DefaultScheme = CustomRoleHandler.AuthenticationScheme)
-                    .AddScheme<CustomRoleHandlerOptions, CustomRoleHandler>(CustomRoleHandler.AuthenticationScheme,
+                services.AddAuthentication(x => x.DefaultScheme = ClaimInjectorHandler.AuthenticationScheme)
+                    .AddScheme<ClaimInjectorHandlerOptions, ClaimInjectorHandler>(ClaimInjectorHandler.AuthenticationScheme,
                         x => { });
             });
         }

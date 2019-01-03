@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace AspNetCore.Testing.Site
+namespace AspNetCore.Testing.Authentication.ClaimInjector.Site
 {
     public class Program
     {

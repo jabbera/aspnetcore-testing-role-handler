@@ -1,19 +1,19 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using AspNetCore.Testing.RoleHandler;
-using AspNetCore.Testing.Site;
+using AspNetCore.Testing.Authentication.ClaimInjector;
+using AspNetCore.Testing.Authentication.ClaimInjector.Site;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.IdentityModel.Tokens;
 using Xunit;
 
-namespace role_handler_test
+namespace AspNetCore.Testing.Authentication.ClaimInjector.Test
 {
-    public class UnitTests : IClassFixture<CustomRoleWebApplicationFactory<Startup>>
+    public class UnitTests : IClassFixture<ClaimInjectorWebApplicationFactory<Startup>>
     {
-        private readonly CustomRoleWebApplicationFactory<Startup> _factory;
+        private readonly ClaimInjectorWebApplicationFactory<Startup> _factory;
 
-        public UnitTests(CustomRoleWebApplicationFactory<Startup> factory)
+        public UnitTests(ClaimInjectorWebApplicationFactory<Startup> factory)
         {
             this._factory = factory;
             this._factory.RoleConfig.Reset();
@@ -81,6 +81,25 @@ namespace role_handler_test
             string actual = await response.Content.ReadAsStringAsync();
 
             Assert.Equal(expectedName, actual);
+        }
+
+        [Fact]
+        public async Task CustomClaimsWorkTest()
+        {
+            string expectedValue = "Hello World";
+            string expectedClaimType = "CustomClaimType";
+
+            this._factory.RoleConfig.AddClaim(expectedClaimType, expectedValue);
+
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync($"api/Values/ReturnsCustomClaim/{expectedClaimType}");
+
+            response.EnsureSuccessStatusCode();
+
+            string actual = await response.Content.ReadAsStringAsync();
+
+            Assert.Equal(expectedValue, actual);
         }
 
         [Fact]

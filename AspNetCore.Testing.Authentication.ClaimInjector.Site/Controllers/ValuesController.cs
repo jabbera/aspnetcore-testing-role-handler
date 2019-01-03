@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.Testing.Site.Controllers
+namespace AspNetCore.Testing.Authentication.ClaimInjector.Site.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -27,5 +27,9 @@ namespace AspNetCore.Testing.Site.Controllers
 
         [HttpGet("[action]")]
         public ActionResult<string> ReturnsName() => HttpContext.User.Identity.Name;
+
+        [HttpGet("[action]/{claimType}")]
+        public ActionResult<string> ReturnsCustomClaim(string claimType) =>
+            HttpContext.User.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
     }
 }

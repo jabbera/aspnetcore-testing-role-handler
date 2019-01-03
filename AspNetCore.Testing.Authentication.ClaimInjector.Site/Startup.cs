@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace AspNetCore.Testing.Site
+namespace AspNetCore.Testing.Authentication.ClaimInjector.Site
 {
     public class Startup
     {
