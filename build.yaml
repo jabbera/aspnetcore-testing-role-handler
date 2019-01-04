@@ -28,7 +28,6 @@ steps:
     projectVersion: '$(ver)'
     extraProperties: |
      sonar.cs.opencover.reportsPaths="$(Build.SourcesDirectory)\coverage\.opencover.xml"
-     sonar.coverage.exclusions=**\AspNetCore.Testing.Authentication.ClaimInjector.Site\**
 
 - task: NuGetToolInstaller@0
   displayName: "Install NuGet Client"
