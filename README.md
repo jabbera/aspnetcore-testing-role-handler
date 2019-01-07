@@ -46,7 +46,7 @@ For more examples see the unit tests [here](https://github.com/jabbera/aspnetcor
 
 After learning about this great new library [Microsoft.AspNetCore.Mvc.Testing](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-2.2) I was excited to try it. Then I found out it has little to little to no built in support for testing controllers with Role based Authorization. 
 
-* [How to create authenticated request?](https://github.com/aspnet/Docs/issues/688)
+* [How to create authenticated request?](https://github.com/aspnet/Docs/issues/6882)
 * [add Integration Testing chapter for the Contoso University example code](https://github.com/aspnet/Docs/issues/3438)
 * [Create sample for Integration testing with user claims.](https://github.com/aspnet/Docs/issues/3833)
 * [Document how to replace the Authentication/Identity related middlewares in the integration tests](https://github.com/aspnet/Docs/issues/9957)
