@@ -1,5 +1,10 @@
 # AspNetCore.Testing.Authentication.ClaimInjector
 
+![Build Status](https://img.shields.io/azure-devops/build/mike-barry/aspnetcore-testing-role-handler/9.svg) 
+![Test Status](https://img.shields.io/azure-devops/tests/mike-barry/aspnetcore-testing-role-handler/9.svg)
+![Coverage](https://img.shields.io/azure-devops/coverage/mike-barry/aspnetcore-testing-role-handler/9.svg)
+![NuGet](https://img.shields.io/nuget/v/AspNetCore.Testing.Authentication.ClaimInjector.svg)
+
 Excercising claim based logic using Microsoft.AspNetCore.Mvc.Testing is now as simple as:
 
 ```
