@@ -47,7 +47,12 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector
 
             builder.ConfigureTestServices(services =>
             {
-                services.AddAuthentication(x => x.DefaultScheme = ClaimInjectorHandler.AuthenticationScheme)
+                services.AddAuthentication(x =>
+                    {
+                        x.DefaultScheme = ClaimInjectorHandler.AuthenticationScheme;
+                        x.DefaultAuthenticateScheme = ClaimInjectorHandler.AuthenticationScheme;
+                        x.DefaultChallengeScheme = ClaimInjectorHandler.AuthenticationScheme;
+                    })
                     .AddScheme<ClaimInjectorHandlerOptions, ClaimInjectorHandler>(ClaimInjectorHandler.AuthenticationScheme,
                         x => { });
             });
