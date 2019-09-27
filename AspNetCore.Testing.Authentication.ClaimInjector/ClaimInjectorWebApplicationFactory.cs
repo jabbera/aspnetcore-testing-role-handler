@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text;
 
 namespace AspNetCore.Testing.Authentication.ClaimInjector
 {
@@ -24,6 +24,10 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector
         /// The main customization point of the claims.
         /// </summary>
         public ClaimInjectorHandlerHeaderConfig RoleConfig { get; } = new ClaimInjectorHandlerHeaderConfig();
+
+        public string RoleClaimType { get; set; } = ClaimTypes.Role;
+
+        public string NameClaimType { get; set; } = ClaimTypes.Name;
 
         protected override void ConfigureClient(HttpClient client)
         {
@@ -54,7 +58,11 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector
                         x.DefaultChallengeScheme = ClaimInjectorHandler.AuthenticationScheme;
                     })
                     .AddScheme<ClaimInjectorHandlerOptions, ClaimInjectorHandler>(ClaimInjectorHandler.AuthenticationScheme,
-                        x => { });
+                        x =>
+                        {
+                            x.RoleClaimType = RoleClaimType;
+                            x.NameClaimType = NameClaimType;
+                        });
             });
         }
     }
