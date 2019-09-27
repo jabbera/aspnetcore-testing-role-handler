@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace AspNetCore.Testing.Authentication.ClaimInjector.Site.Controllers
 {
@@ -27,6 +24,9 @@ namespace AspNetCore.Testing.Authentication.ClaimInjector.Site.Controllers
 
         [HttpGet("[action]")]
         public ActionResult<string> ReturnsName() => HttpContext.User.Identity.Name;
+
+        [HttpGet("[action]/{role}")]
+        public ActionResult<bool> ReturnsIsInRole(string role) => HttpContext.User.IsInRole(role);
 
         [HttpGet("[action]/{claimType}")]
         public ActionResult<string> ReturnsCustomClaim(string claimType) =>
